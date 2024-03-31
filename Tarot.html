@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Tarot</h1>
+    <script>
+      // 创建包含正立和倒立状态的78张塔罗牌的牌组
+      function createTarotDeck() {
+        const majorArcana = [
+          "The Fool",
+          "The Magician",
+          "The High Priestess",
+          "The Empress",
+          "The Emperor",
+          "The Hierophant",
+          "The Lovers",
+          "The Chariot",
+          "Strength",
+          "The Hermit",
+          "Wheel of Fortune",
+          "Justice",
+          "The Hanged Man",
+          "Death",
+          "Temperance",
+          "The Devil",
+          "The Tower",
+          "The Star",
+          "The Moon",
+          "The Sun",
+          "Judgement",
+          "The World",
+        ];
+
+        const suits = ["Wands", "Cups", "Swords", "Pentacles"];
+        const cards = [];
+
+        //11，12，13，14 依次指 king，queen, knight骑士, page侍从
+        for (const suit of suits) {
+          for (let i = 1; i <= 14; i++) {
+            let rankName =
+              i <= 10
+                ? i
+                : i === 11
+                ? "king"
+                : i === 12
+                ? "queen"
+                : i === 13
+                ? "knight"
+                : "page";
+            cards.push({ name: `${suit} - ${rankName}`, upright: true });
+          }
+        }
+
+        // 添加大阿卡纳牌
+        for (const card of majorArcana) {
+          cards.push({ name: card, upright: true });
+        }
+
+        return cards;
+      }
+
+      // 使用洗牌算法洗牌
+      function shuffleDeck(deck) {
+        for (let i = deck.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [deck[i], deck[j]] = [deck[j], deck[i]];
+        }
+        return deck;
+      }
+
+      // 从牌组中抽取指定数量的牌，确保每张牌都明确指定正立或倒立状态
+      function drawCards(deck, count) {
+        const drawnCards = [];
+
+        for (let i = 0; i < count; i++) {
+          const card = deck.pop(); // 从牌组末尾抽取一张牌
+          drawnCards.push(card);
+        }
+
+        return drawnCards;
+      }
+
+      // 随机确定每张牌是正立还是倒立
+      function randomlySetUpright(deck) {
+        deck.forEach((card) => {
+          card.upright = Math.random() < 0.5;
+        });
+      }
+
+      // 模拟抽取三张塔罗牌
+      function simulateTarotReading() {
+        const tarotDeck = createTarotDeck();
+        const shuffledDeck = shuffleDeck(tarotDeck);
+
+        // 随机确定每张牌是正立还是倒立
+        randomlySetUpright(shuffledDeck);
+
+        const drawnCards = drawCards(shuffledDeck, 3);
+
+        return drawnCards;
+      }
+
+      // 运行模拟
+      const simulatedReading = simulateTarotReading();
+      console.log(simulatedReading);
+
+      // 模拟塞尔提克十字牌阵的塔罗牌占卜
+      function simulateCelticCrossReading() {
+        const tarotDeck = createTarotDeck();
+        const shuffledDeck = shuffleDeck(tarotDeck);
+
+        // 随机确定每张牌是正立还是倒立
+        randomlySetUpright(shuffledDeck);
+
+        // 抽取十张牌，模拟塞尔提克十字牌阵
+        const drawnCards = drawCards(shuffledDeck, 10);
+
+        return drawnCards;
+      }
+
+      // 运行模拟
+      const simulatedCelticCrossReading = simulateCelticCrossReading();
+      console.log(simulatedCelticCrossReading);
+    </script>
+  </body>
+</html>
